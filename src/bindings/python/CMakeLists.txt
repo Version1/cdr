@@ -2,9 +2,9 @@
 # Copyright 2014-2018 Neueda Ltd.
 #
 # Include python
-# find_package(PythonInterp ${PYTHON_VER} REQUIRED)
-# find_package(PythonLibs ${PYTHON_VER} REQUIRED)
-# include_directories(${PYTHON_INCLUDE_PATH})
+find_package(PythonInterp 2.7 EXACT REQUIRED)
+find_package(PythonLibs 2.7 EXACT REQUIRED)
+include_directories(${PYTHON_INCLUDE_PATH})
 
 # set the flags for swig
 set(CMAKE_SWIG_FLAGS "")
@@ -49,15 +49,17 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PYTHON_INCLUDE_PATH}")
 link_libraries(${PYTHON_LDFLAGS})
 
 # Add swig module
-swig_add_module(cdr python ../cdr.py.i)
-swig_link_libraries(cdr cdr cdrpy ${PYTHON_LIBS})
+swig_add_library(Cdr
+  LANGUAGE python
+  SOURCES ../cdr.py.i)
+swig_link_libraries(Cdr cdr cdrpy ${PYTHON_LIBS})
 
 # Files to install with Python
 set(PYTHON_INSTALL_FILES
   ${CMAKE_CURRENT_BINARY_DIR}/cdr.py)
 
 # Declare install target for python
-install(TARGETS _cdr
+install(TARGETS ${SWIG_MODULE_Cdr_REAL_NAME}
   DESTINATION lib/python)
 install(FILES ${PYTHON_INSTALL_FILES}
   DESTINATION lib/python)

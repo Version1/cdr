@@ -53,6 +53,7 @@ swig_add_library(Cdr
   LANGUAGE python
   SOURCES ../cdr.py.i)
 swig_link_libraries(Cdr cdr cdrpy ${PYTHON_LIBS})
+set_target_properties(${SWIG_MODULE_Cdr_REAL_NAME} PROPERTIES OUTPUT_NAME "_cdr")
 
 # Files to install with Python
 set(PYTHON_INSTALL_FILES
